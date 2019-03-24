@@ -1,0 +1,551 @@
+@import "normalize";
+
+$main-color: rgb(240, 236, 14);
+%nostyle-list {
+  margin: 0;
+  padding: 0; /*預設放點點或數字*/
+  list-style: none;
+}
+
+@mixin r_t_w_i($url, $width, $height) {
+  width: $width;
+  height: $height;
+  background: url($url) no-repeat;
+  background-size: 100% 100%;
+  text-indent: 110%; /*首行縮排*/
+  overflow: hidden; /*超過容器的內容隱藏*/
+  white-space: nowrap; /*不換行 防止文字換行*/
+}
+
+html {
+  font-size: 16px;
+  font-family: sans-serif;
+  line-height: 1.4;
+  color: #555;
+}
+a {
+  color: #009ced;
+  text-decoration: none;
+  transition-property: background;
+  transition-duration: 0.8s;
+  &:hover {
+    color: #0081c3;
+    text-decoration: underline;
+  }
+}
+.container {
+  width: 1080px;
+  margin: 0 auto;
+}
+img {
+  max-width: 100%;
+}
+.top-menu {
+  background-color: $main-color;
+  height: 36px;
+  ul {
+    @extend %nostyle-list;
+    display: flex; /*讓ul變成flex容器*/
+    justify-content: flex-end;
+  }
+  a {
+    display: block; /*inline 不能指定寬高*/
+    width: 90px;
+    height: 36px;
+    line-height: 36px; /*確定不換行 可以用同等高 來置中*/
+    color: #fff;
+    text-align: center;
+    text-decoration: none;
+    transition-property: background;
+    transition-duration: 0.8s;
+  }
+  a:hover {
+    background-color: darken($main-color, $amount: 20); /*#ff6204*/
+  }
+  i {
+    margin-right: 5px;
+  }
+}
+.top-block {
+  height: 80px;
+  background-color: #ddd;
+  .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    padding: 9px 0;
+  }
+}
+h1.logo {
+  margin: 0;
+  img {
+    width: 250px;
+    height: 62px;
+    display: block;
+  }
+  a {
+    display: block;
+  }
+}
+.search {
+  position: relative;
+  input {
+    /*width: 285px;(原寬)*/
+    width: 250px;
+    padding-left: 35px;
+    height: 28px;
+    border: #ddd 2px solid;
+    border-radius: 17px;
+  }
+  input:focus {
+    outline: none;
+    border-color: #009ced;
+    box-shadow: #009ced 0 0 2px; /*5px 5px 22px*/
+  }
+  i {
+    position: absolute;
+    left: 9px;
+    top: 9px;
+  }
+}
+
+.main-menu {
+  height: 38px;
+  border-top: #ddd 1px solid;
+  border-bottom: #ddd 1px solid;
+  button {
+    display: none;
+  }
+  li {
+    /*width: 20%;*/
+    flex: 0 0 20%; /*為flex子元素設定 寬度很大不要 高度很高不要*/
+  }
+  ul {
+    @extend %nostyle-list;
+    display: flex; /*讓ul變成flex容器*/ /*容器之第一層子元素即會依預設值由左至右排列*/
+    /*justify-content: flex-end;不需要到最右邊*/
+    /*height: 38px; (main-menu)*/
+  }
+  a {
+    display: block; /*a 原本是行內元素 不能指定寬高*/
+    color: #3d4143;
+    height: 38px;
+    line-height: 38px; /*確定不換行 可以用同等高 來置中*/
+    text-align: center;
+    text-decoration: none;
+  }
+  a:hover {
+    color: #fff;
+    background-color: $main-color;
+  }
+}
+.index-image {
+  height: 400px;
+  background: url(../images/index-image.jpg) center center no-repeat;
+  background-size: cover;
+  //position: relative; /*設定參照容器*/
+  .container {
+    position: relative;
+    height: 100%;
+  }
+  h2 {
+    font-size: 50px;
+    color: rgba(255, 255, 255, 0.8); /*半透明的白色*/
+    text-shadow: rgba(#fff, 0.8) 0 0 0, rgba(#000, 0.8) 0 0 10px;
+    position: absolute; /*絕對定位*/
+    margin: 0 0 0 150px; /*margin: 0->取消H2原本的margin*/ /*有4個值的話 上右下左(距左150px)*/
+    left: 50%; /*絕對定位垂直置中的方法先用left->再用margin推*/
+    bottom: 80px;
+    span {
+      display: block; /*換行*/
+      position: relative; /*static不能推*/
+      left: 2em; /*推兩個字*/
+    }
+  }
+}
+
+.new-item {
+  padding: 40px 0;
+  ul {
+    @extend %nostyle-list;
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+  }
+  li {
+    flex: 0 0 340px;
+  }
+}
+
+.featured-item {
+  background-color: #eee;
+  padding: 40px 0;
+  h2 {
+    color: $main-color;
+    font-size: 2rem;
+    text-align: center;
+    margin: 0 0 30px; /*(上 左右 下)*/
+  }
+  h3 {
+    margin-top: 0px;
+    font-size: 1.5rem;
+  }
+  .user {
+    float: right;
+    margin-top: 30px;
+    img {
+      display: inline-block;
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      margin-left: 10px;
+      vertical-align: middle;
+    }
+  }
+}
+
+.item-content {
+  display: flex;
+}
+.item-img {
+  /*width: 360px;*/
+  flex: 0 0 360px; /*不延展 不再容器不夠寬的時候縮減 */
+  margin-right: 30px;
+}
+.item-text {
+  flex-grow: 1; /*也可 flex:1*/
+}
+
+.news-and-principle {
+  padding: 40px 0;
+  .container {
+    display: flex;
+  }
+}
+.news {
+  flex: 1; /*不延展不縮減 flex-grow:1*/
+  min-width: 0; /*flex 子元素預設min-width=內容寬 ,不換行內容太寬,需要覆寫*/
+  h2 {
+    margin: 0 0 20px;
+    @include r_t_w_i("../images/news-title@2x.png", 120px, 36px);
+  }
+  ul {
+    @extend %nostyle-list;
+  }
+  li {
+    padding: 8px;
+    border-bottom: #ddd 1px dotted;
+  }
+  a {
+    display: block; /*有範圍*/
+    white-space: nowrap; /*內容不換行*/
+    overflow: hidden; /*超出範圍隱藏*/
+    text-overflow: ellipsis; /*超出範圍文字變...*/
+  }
+  li:nth-child(even) {
+    /*n-> 第幾個 (value ) odd 奇數*/
+    background: #f5f5f5;
+  }
+}
+.principle {
+  flex: 0 0 280px;
+  margin-left: 30px; /*auto*/
+  display: flex;
+  flex-direction: column-reverse;
+  color: white /*#fff*/;
+  h2 {
+    height: 60px; /*不含padding 會變140 所以-40*/
+    margin: 0;
+    padding: 20px;
+    background-color: #5f5547;
+    position: relative;
+    /*New*/
+    &::before {
+      content: "";
+      display: inline-block;
+      width: 60px;
+      height: 60px;
+      background-color: #fff;
+      border-radius: 50%;
+      vertical-align: middle;
+      background: url(../images/cat-head-animate@2x.png) no-repeat #fff;
+      background-size: 60px 300px;
+      position: relative;
+
+      animation-name: moving-cat;
+      animation-duration: 0.5s;
+      animation-iteration-count: infinite;
+      animation-timing-function: steps(1);
+    }
+    @keyframes moving-cat {
+      0% {
+        background-position: 0 0;
+      }
+      50% {
+        background-position: 0 -240px;
+      }
+      100% {
+        background-position: 0 0;
+      }
+    }
+
+    img {
+      display: none;
+      /*display: inline-block;
+      height: 60px;
+      width: 60px;
+      border-radius: 50%;
+      background-color: white;
+      margin-left: 5px;
+      vertical-align: middle;*/
+    }
+  }
+  h2::after {
+    /*(動畫)before*/
+    content: ""; /*(********很重要不給不會顯示)*/
+    display: block;
+    position: absolute;
+    /*border-bottom:  transparent 8px solid ;
+    border-left: transparent 8px solid;
+    border-right:  transparent 8px solid;*/
+    border: transparent 8px solid;
+    border-top: $main-color 8px solid;
+    left: 40px;
+    top: 0;
+  }
+}
+.principle-content {
+  background-color: $main-color;
+  padding: 10px;
+  flex: 1px; /*根據軸向延伸↓*/
+  li {
+    margin: 10px;
+    font-size: 18px;
+  }
+}
+.page-footer {
+  padding: 40px 0;
+  background-color: #3d4143;
+  color: #fff;
+  text-align: center;
+  ul {
+    @extend %nostyle-list;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+  }
+  .business-hours {
+    /*.business-hours 權重不夠不會套用 要+重*/
+    margin: 20px;
+    flex: 0 0 100%;
+  }
+  li {
+    flex: 0 0 340px;
+  }
+}
+
+@media screen and(max-width:1140px) {
+  // body{
+  //     background: #f00;
+  // }測試用
+  .container {
+    width: 840px;
+    margin: 0 auto;
+  }
+  .index-image h2 {
+    // margin-left: auto;
+    left: auto;
+    margin: 0;
+    right: 2em;
+  }
+  .new-item li {
+    flex: 0 0 260px;
+  }
+  .page-footer li {
+    flex: 0 0 260px;
+  }
+}
+@media screen and(max-width:880px) {
+  // body{
+  //     background: #f00;
+  // }
+  .container {
+    width: 760px;
+  }
+  .index-img h2 {
+    margin-left: 0px;
+  }
+  .page-footer li {
+    flex: 0 0 500px;
+    flex-basis: auto;
+  }
+  .new-item {
+    ul {
+      flex-direction: column;
+    }
+    li {
+      display: flex;
+      flex-basis: auto;
+      margin-bottom: 20px;
+    }
+    li:last-child {
+      margin-bottom: 0;
+    }
+    li > a {
+      flex: 0 0 200px;
+      margin-right: 20px;
+    }
+    li > div {
+      flex: 1; /*延展*/
+    }
+    li h2 {
+      margin-top: 0;
+    }
+  }
+
+  .news-and-principle {
+    .container {
+      flex-direction: column;
+    }
+  }
+  .news {
+    margin-bottom: 20px;
+  }
+  .principle {
+    margin-left: 0;
+    flex-basis: auto; /*因為軸向改變 寬度變高到 用auto 覆蓋*/
+    flex-direction: column;
+    h2 {
+      background: transparent;
+      color: #3d4143;
+      padding: 0;
+    }
+    h2::after {
+      display: none;
+    }
+    h2::before {
+      border: $main-color 5px solid;
+    }
+    ol {
+      list-style: none;
+    }
+    ol li {
+      position: relative;
+    }
+    ol li::before {
+      display: block; /*inline-block文字太常不好看*/
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: #fff;
+      color: $main-color;
+      text-align: center; /*水平置中*/
+      line-height: 20px; /*垂直置中*/
+      position: absolute;
+      top: 2px;
+      left: -25px;
+    }
+    ol li:nth-child(1)::before {
+      content: "1";
+    }
+    ol li:nth-child(2)::before {
+      content: "2";
+    }
+    ol li:nth-child(3)::before {
+      content: "3";
+    }
+  }
+  .page-footer {
+    ul {
+      flex-direction: column;
+    }
+    li {
+      flex-basis: auto;
+      margin: 5px;
+    }
+  }
+}
+@media screen and(max-width:767px) {
+  .container {
+    width: 90%; /*相對值 之後更小都不用處理*/
+  }
+  .item-content {
+    flex-direction: column;
+  }
+  .item-img {
+    flex-basis: auto;
+    margin: 0 0 20px;
+    img {
+      display: block;
+      margin: 0 auto; /*沒用的話可能是display 不是block*/
+    }
+  }
+  .featured-item h3 {
+    text-align: center;
+  }
+}
+@media screen and(max-width:640px) {
+  .top-block {
+    height: auto;
+  }
+  .top-block .container {
+    flex-direction: column;
+    align-items: center; /*因為軸向改變*/
+  }
+  h1 .logo {
+    margin-bottom: 10px;
+  }
+  .main-menu {
+    position: relative;
+    .container {
+      width: 100%;
+    }
+    ul  {
+      flex-direction: column;
+      flex-basis: auto;
+      position: absolute;
+      top: 40px;
+      width: 100%;
+      background: rgba(#fff, 0.9);
+      z-index: 5; /*改變深度*/
+    }
+    button {
+      display: block;
+      background: #fff;
+      border: none;
+      width: 100%;
+      height: 40px;
+      i {
+        margin-left: 5px;
+      }
+    }
+  }
+}
+
+@media screen and(max-width:580px) {
+  .index-image h2 {
+    font-size: 40px;
+  }
+  .new-item {
+    li {
+      flex-direction: column;
+      //flex-basis: auto;
+      align-items: center;
+      // a{
+      //   display: inline-block;
+      //   text-align: center;
+      // }
+    }
+    h2 {
+      text-align: center;
+      margin-top: 10px;
+    }
+    
+    p{
+      text-indent: 2em;
+    }
+  }
+  .news a {
+      white-space: normal;
+    }
+}
